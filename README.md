@@ -43,3 +43,16 @@ Examples
 Server server = new Server("purpleprison.net");
 System.out.println(server.hasLiked("sadtool")) //Prints "true", since sadtool has liked PurplePrison
 ```
+
+## Testes
+
+O projeto usa JUnit 5 e Mockito para testes unitários.
+
+- **Rodar testes (recomendado):** pela IDE (IntelliJ, Eclipse, VS Code com extensão Java), com o plugin Lombok ativo. Assim a compilação e os testes rodam corretamente.
+- **Rodar testes pelo Maven:** `mvn test` — funciona com JDK 8 ou 11. Em JDK 17+ pode ser necessário configurar o processador de anotações do Lombok ou usar JDK 8/11 para o build.
+
+Testes incluídos:
+- **FriendTest** — criação e getters do POJO `Friend`.
+- **RequestUtilTest** — `insertDashUUID` e `getLikes` (com mock de `Request`).
+- **RequestTest** — estado da conexão e exceção antes de `connect()`.
+- **IntegrationTest** — chamadas reais às APIs (Mojang, NameMC). Estão anotados com `@Disabled`; remova a anotação para rodar (requer rede).
