@@ -4,6 +4,8 @@ An unofficial Java based library for the NameMC API. The intention is for this l
 
 This library also includes some features which are not included in NameMC's API, however do relate to the player, such as determining whether or not the profile has an OptiFine cape.
 
+[![](https://img.shields.io/badge/HyperPowered-Use%20the%20official%20repository-yellow?color=%23279BF8&cacheSeconds=3600)](https://maven.dev.hyperpowered.net/#/releases/balbucio/namemc4j/NameMC4J/)
+
 ## Dependencies
 
   NameMC4J only depends on Gson, which is not shaded into the JAR.
