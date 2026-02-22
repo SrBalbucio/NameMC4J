@@ -1,27 +1,29 @@
 package dev.gardeningtool.namemc;
 
-import dev.gardeningtool.namemc.profile.Profile;
-import dev.gardeningtool.namemc.server.Server;
-import dev.gardeningtool.namemc.web.RequestUtil;
-import org.junit.jupiter.api.Disabled;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
+import dev.gardeningtool.namemc.profile.Profile;
+import dev.gardeningtool.namemc.server.Server;
+import dev.gardeningtool.namemc.web.RequestUtil;
 
 /**
  * Testes de integração que chamam as APIs reais (Mojang, NameMC, OptiFine).
  * Não rodam por padrão no {@code mvn test}. Para rodar: remova o exclude de
  * IntegrationTest no pom.xml ou use o profile "integration".
  */
-@Disabled("Integração com APIs externas - habilitar manualmente para validar")
+//  @Disabled("Integração com APIs externas - habilitar manualmente para validar")
 @DisplayName("Integração com APIs (Mojang / NameMC)")
 class IntegrationTest {
 
-    private static final UUID NOTCH_UUID = UUID.fromString("069a79f4-44e9-4726-a5be-fca90e38aaf5");
-    private static final String NOTCH_USERNAME = "Notch";
+    private static final UUID NOTCH_UUID = UUID.fromString("aa3c6eab-a5e7-4ee6-93ac-2d689b260350");
+    private static final String NOTCH_USERNAME = "srbalbuciogg";
 
     @Test
     @DisplayName("RequestUtil.username retorna nome para UUID válido (Notch)")

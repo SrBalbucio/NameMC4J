@@ -13,30 +13,34 @@ import java.util.*;
 public class RequestUtil {
 
     /**
+     * UUID to username. Uses the documented endpoint.
+     * @see <a href="https://mojang-api-docs.gapple.pw/no-auth/uuid-to-username">UUID to username</a>
      * @param uuid The UUID of the target to obtain the username of
      * @return The username associated with the target UUID
-     * @throws IllegalArgumentException If the UUID is invalid
+     * @throws IllegalArgumentException If the UUID is invalid (204 No Content, 400 Bad Request, or empty response)
      */
     @SneakyThrows
     public static String username(UUID uuid) throws IllegalArgumentException {
-        Request request = getRequest("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid.toString());
+        Request request = getRequest("https://api.mojang.com/user/profile/" + uuid.toString());
         Map<?, ?> map = request.map();
-        if (map == null) {
+        if (map == null || !map.containsKey("name")) {
             throw new IllegalArgumentException(String.format("%s is not a valid UUID!", uuid.toString()));
         }
         return map.get("name").toString();
     }
 
     /**
+     * Username to UUID (GET). Uses the documented endpoint.
+     * @see <a href="https://mojang-api-docs.gapple.pw/no-auth/username-to-uuid-get">Username to UUID (GET)</a>
      * @param username The username associated with a UUID
      * @return The UUID of the specified argument
-     * @throws IllegalArgumentException If the username is invalid
+     * @throws IllegalArgumentException If the username is invalid (204 No Content, 400 Bad Request, or empty response)
      */
     @SneakyThrows
     public static UUID uuid(String username) throws IllegalArgumentException {
-        Request request = getRequest("https://api.mojang.com/users/profiles/minecraft/" + username + "?at=0");
+        Request request = getRequest("https://api.mojang.com/users/profiles/minecraft/" + username);
         Map<?, ?> map = request.map();
-        if (map == null) {
+        if (map == null || !map.containsKey("id")) {
             throw new IllegalArgumentException(String.format("%s is not a valid username!", username));
         }
         return UUID.fromString(insertDashUUID(map.get("id").toString()));
@@ -71,17 +75,14 @@ public class RequestUtil {
         return friends;
     }
 
-    @SneakyThrows
+    /**
+     * Name history for the given UUID. The Mojang endpoint for this was removed in September 2022,
+     * so this method always returns an empty map. It is kept for API compatibility.
+     * @param uuid The UUID of the player
+     * @return An empty map (Mojang no longer provides name history publicly)
+     */
     public static Map<String, Long> previousNames(UUID uuid) {
-        Request request = getRequest(String.format("https://api.mojang.com/user/profiles/%s/names", uuid.toString()));
-        JsonArray array = request.toJsonArray();
-        Map<String, Long> previousNames = new HashMap<>();
-        for(JsonElement element : array) {
-            JsonObject object = element.getAsJsonObject();
-            long timeCreated = object.get("changedToAt") == null ? 0 : object.get("changedToAt").getAsLong();
-            previousNames.put(object.get("name").getAsString(), timeCreated);
-        }
-        return previousNames;
+        return Collections.emptyMap();
     }
 
     @SneakyThrows

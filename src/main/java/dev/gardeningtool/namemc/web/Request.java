@@ -105,6 +105,9 @@ public class Request {
         if (responseCode == 429) {
             throw new IllegalStateException("Rate limited!");
         }
+        if (responseCode == 204) {
+            return "";
+        }
         InputStream inputStream = connection.getInputStream();
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader reader = new BufferedReader(inputStreamReader);

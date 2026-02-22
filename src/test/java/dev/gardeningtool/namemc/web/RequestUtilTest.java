@@ -1,12 +1,15 @@
 package dev.gardeningtool.namemc.web;
 
 import com.google.gson.JsonArray;
+
 import dev.gardeningtool.namemc.friend.Friend;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,5 +75,14 @@ class RequestUtilTest {
 
         assertNotNull(likes);
         assertTrue(likes.isEmpty());
+    }
+
+    @Test
+    @DisplayName("previousNames retorna mapa vazio (endpoint Mojang descontinuado)")
+    void previousNames_returnsEmptyMap() {
+        Map<String, Long> result = RequestUtil.previousNames(UUID.fromString("069a79f4-44e9-4726-a5be-fca90e38aaf5"));
+
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
     }
 }
